@@ -234,14 +234,15 @@ class Trainer():
             num_epoch = 1
             flag=0
             try:
-                saver.restore(sess, "./checkpoints/model.ckpt")
-                flag=1
+                print("Trying to restore model....")
+                saver = tf.train.import_meta_graph('./checkpoints/seq2seq-4805.meta')
+                print("Restored Meta")
+                saver.restore(sess,'./checkpoints/seq2seq-4085')
+                print("Restored checkpoint")
                 print("Model restored.")
-                model.saver.save(sess, self.path_to_graph, global_step=step)
-
-                print("Training is finished.")
                 
             except:
+                print("Restoring failed. Starting to train")
                 for step in range(1, num_steps):
                     beg_t = timeit.default_timer()
                     X, L = train_data.next()
@@ -273,8 +274,6 @@ class Trainer():
                             np.mean(total_loss),
                             np.mean(step_loss),
                             np.sum(timings))
-                        save_path = saver.save(sess, "./checkpoints/model.ckpt")
-                        print("Model saved in path: %s" % save_path)
                         timings = []
 
                     if step == 1:
@@ -283,10 +282,6 @@ class Trainer():
                     if np.mean(total_loss) < min_loss or num_epoch > num_epochs or flag==1:
                         model.saver.save(sess, self.path_to_graph, global_step=step)
                         print("Training is finished.")
-
-                        #Save model
-                        save_path = saver.save(sess, "./checkpoints/model.ckpt")
-                        print("Model saved in path: %s" % save_path)
                         break
 
 
