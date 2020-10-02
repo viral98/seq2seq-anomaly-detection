@@ -1,3 +1,4 @@
+# THIS IS NO LONGER MAINTAINED
 # seq2seq-anomaly-detection
 A Natural Language Processing based approach to detect malicious HTTP requests. Originally forked from [seq2seq-web-attack-detection](https://github.com/PositiveTechnologies/seq2seq-web-attack-detection) .
 
